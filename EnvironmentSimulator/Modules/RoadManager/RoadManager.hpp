@@ -653,7 +653,19 @@ namespace roadmanager
 		int GetLaneGlobalIdById(int id);
 		double GetOuterOffset(double s, int lane_id);
 		double GetWidth(double s, int lane_id);
-		int GetClosestLaneIdx(double s, double t, double &offset, bool noZeroWidth, int laneTypeMask = Lane::LaneType::LANE_TYPE_ANY_DRIVING);
+
+		/**
+		Get the index (not id) of the lane closest to given t value. It will only consider lanes in same direction indicated by
+		current lane id and/or t.
+		@param cur_lane_id Current lane id. Set to zero if not known.
+		@param s Longitudinal position along the lane section
+		@param t Lateral position
+		@param offset Return parameter holding the lane offset (relating to returned lane id)
+		@param noZeroWidth Flag controlling whether to consider lanes with zero width (true/false)
+		@param laneTypeMask Optional bitmask representing what lanetypes to consider. Default = LANE_TYPE_ANY_DRIVING.
+		@return Index (not id) of the closest lane
+		*/
+		int GetClosestLaneIdx(int cur_lane_id, double s, double t, double &offset, bool noZeroWidth, int laneTypeMask = Lane::LaneType::LANE_TYPE_ANY_DRIVING);
 
 		/**
 		Get lateral position of lane center, from road reference lane (lane id=0)
@@ -661,6 +673,7 @@ namespace roadmanager
 				lane 1 center offset is 5/2 = 2.5 and lane 2 center offset is 5 + 4/2 = 7
 		@param s distance along the road segment
 		@param lane_id lane specifier, starting from center -1, -2, ... is on the right side, 1, 2... on the left
+		@return Lateral position (t value) of lane center
 		*/
 		double GetCenterOffset(double s, int lane_id);
 		double GetOuterOffsetHeading(double s, int lane_id);

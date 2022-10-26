@@ -398,6 +398,7 @@ RoadGeom::RoadGeom(roadmanager::OpenDrive *odr)
 			std::vector<GeomPoint> geom_point;
 
 			roadmanager::Position pos;
+			pos.SetSnapLaneTypes(roadmanager::Lane::LaneType::LANE_TYPE_ANY);
 			s_list.clear();
 
 			bool done = false;
